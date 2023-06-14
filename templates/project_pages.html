@@ -1,0 +1,19 @@
+<div class="row">
+    {% for page in project_pages%}
+    <div class="col-md-4">
+
+        <a href="#" class="portfolio-card">
+            <img src="{{page.image.url}}" class="portfolio-card-img"
+                 alt="{{page.title}}">
+            <span class="portfolio-card-overlay">
+                            <span class="portfolio-card-caption">
+                                <h4>{{page.title}}</h4>
+                                {%if page.description%}
+                                    <p class="font-weight-normal">About : {{page.description}}</p>
+                                {% endif %}
+                            </span>
+                        </span>
+        </a>
+    </div>
+    {% endfor%}
+</div><!-- end of row -->

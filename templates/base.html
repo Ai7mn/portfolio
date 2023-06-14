@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with Meyawo landing page.">
+    <meta name="author" content="Devcrud">
+    <title>Aiman Daba | Software Engineer</title>
+    <!-- font icons -->
+    <link rel="stylesheet" href="{% static 'vendors/themify-icons/css/themify-icons.css' %}">
+    <!-- Bootstrap + Meyawo main styles -->
+    <link rel="stylesheet" href="{% static 'css/meyawo.css' %}">
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+
+<!-- Page Navbar -->
+<nav class="custom-navbar" data-spy="affix" data-offset-top="20">
+    <div class="container">
+        <a class="logo" href="{% url 'home' %}">Aiman Daba</a>
+        <ul class="nav">
+            <li class="item">
+                <a class="link" href="#home">Home</a>
+            </li>
+            <li class="item">
+                <a class="link" href="#about">About</a>
+            </li>
+            <li class="item">
+                <a class="link" href="#portfolio">Portfolio</a>
+            </li>
+            <li class="item">
+                <a class="link" href="#contact">Contact</a>
+            </li>
+        </ul>
+        <a href="javascript:void(0)" id="nav-toggle" class="hamburger hamburger--elastic">
+            <div class="hamburger-box">
+                <div class="hamburger-inner"></div>
+            </div>
+        </a>
+    </div>
+</nav><!-- End of Page Navbar -->
+
+{% block content %}
+<!-- Content Goes here -->
+{% endblock content %}
+
+{% include "footer.html" %}
+
+<!-- core  -->
+<script src="{% static 'vendors/jquery/jquery-3.4.1.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.bundle.js' %}"></script>
+
+<!-- bootstrap 3 affix -->
+<script src="{% static 'vendors/bootstrap/bootstrap.affix.js' %}"></script>
+
+<!-- Meyawo js -->
+<script src="{% static 'js/meyawo.js' %}"></script>
+
+</body>
+</html>

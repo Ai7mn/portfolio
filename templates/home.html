@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- page header -->
+<header id="home" class="header">
+    <div class="overlay"></div>
+    <div class="header-content container">
+        <h1 class="header-title">
+            <span class="up">HI!</span>
+            <span class="down">I am Aiman Daba</span>
+        </h1>
+        <p class="header-subtitle">Software Engineer</p>
+
+    </div>
+</header><!-- end of page header -->
+
+<!-- about section -->
+<section class="section pt-0" id="about">
+    <!-- container -->
+    <div class="container text-center">
+        <!-- about wrapper -->
+        <div class="about">
+            <div class="about-img-holder">
+                <img src="{% static 'imgs/myphoto.png'%}" class="about-img" alt="Aiman Daba">
+            </div>
+            <div class="about-caption">
+                <p class="section-subtitle">Who Am I ?</p>
+                <h2 class="section-title mb-3">About Me</h2>
+                <p>
+                    I am Highly motivated and skilled software engineering graduate with experience in full-stack development. Proficient in
+                    multiple programming languages, including Java, Python, and JavaScript. Strong understanding of software development
+                    principles and agile methodologies. Experienced in working with databases, RESTful APIs, and frameworks such as Django
+                    and Flutter. Adept at developing and deploying scalable, robust, and secure web applications. Proven ability to work
+                    collaboratively with cross-functional teams to achieve project goals. Looking for an opportunity to leverage my skills and
+                    passion for software development to contribute to an innovative and dynamic team.
+                </p>
+                <a href="{{cv_link}}" class="btn-rounded btn btn-outline-primary mt-4">Download CV</a>
+            </div>
+        </div><!-- end of about wrapper -->
+    </div><!-- end of container -->
+</section> <!-- end of about section -->
+
+<!-- service section -->
+<section class="section" id="service">
+    <div class="container text-center">
+        <p class="section-subtitle">What I Do ?</p>
+        <h6 class="section-title mb-6">My SKILLS</h6>
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card">
+                    <div class="body">
+                        <img src="{% static 'imgs/internet.png' %}" alt="WEB DEVELOPMENT" class="icon">
+                        <h6 class="title">Full Stack Web Developer</h6>
+                        <p class="subtitle">
+                            I am a Full Stack Web Developer proficient in Django, HTML, CSS, Bootstrap, JavaScript, jQuery, AJAX, and MySQL.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card">
+                    <div class="body">
+                        <img src="{% static 'imgs/app-development.png' %}" alt="Mobile Development" class="icon">
+                        <h6 class="title">Full Stack Mobile Developer</h6>
+                        <p class="subtitle">I am a Full Stack mobile Developer proficient in Flutter & Dart,Firebase, RESTFul api development and consumption and noSQL</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card">
+                    <div class="body">
+                        <img src="{% static 'imgs/cloud-service.png' %}" alt="Cloud Computing" class="icon">
+                        <h6 class="title">Cloud Computing</h6>
+                        <p class="subtitle">I have experience dealing with many cloud platforms such as Azure, Google Cloud and Alibaba Cloud </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card">
+                    <div class="body">
+                        <img src="{% static 'imgs/servers.png' %}" alt="Server Management" class="icon">
+                        <h6 class="title">Server Management</h6>
+                        <p class="subtitle">I have extensive experience in server management, particularly with Linux servers, Apache, and Nginx. With my knowledge and expertise, I can effectively configure, deploy, and maintain these server technologies to ensure optimal performance and reliability for web applications.</p>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end of row -->
+    </div>
+</section><!-- end of service section -->
+
+<!-- portfolio section -->
+<section class="section" id="portfolio">
+    <div class="container text-center">
+        <p class="section-subtitle">What I Did ?</p>
+        <h6 class="section-title mb-6">Portfolio</h6>
+        <!-- row -->
+        {% include "portfolio.html" %}
+    </div><!-- end of container -->
+</section> <!-- end of portfolio section -->
+
+
+
+{% endblock content %}

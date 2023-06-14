@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<header id="home" class="header">
+  <div class="overlay"></div>
+  <div class="header-content container">
+    <h1 class="header-title">
+      <span class="down">{{project.name}}</span>
+    </h1>
+    <p class="header-subtitle">{{project.category}}</p>
+
+  </div>
+</header>
+
+<!-- about section -->
+<section class="section pt-0" id="about">
+  <!-- container -->
+  <div class="container text-center">
+    <!-- about wrapper -->
+    <div class="about">
+      <div class="about-img-holder">
+        <img src="{{project.image.url}}" class="about-img" alt="{{project.name}}">
+      </div>
+      <div class="about-caption">
+        <h2 class="section-title mb-3">About {{project.name}}</h2>
+        <p>
+          {{project.content}}
+        </p>
+        {%if project.url%}
+        <a href="{{project.url}}" target="_blank" class="btn-rounded btn btn-outline-primary mt-4">{{project.check_btn}}</a>
+        {% endif %}
+      </div>
+      </div><!-- end of about wrapper -->
+    </div><!-- end of container -->
+  </section> <!-- end of about section -->
+
+
+{%if project.local%}
+<!-- portfolio section -->
+<section class="section" id="portfolio">
+  <div class="container text-center">
+
+    <h6 class="section-title mb-6">Project Pages</h6>
+    <!-- row -->
+    {% include "project_pages.html" %}
+  </div><!-- end of container -->
+</section> <!-- end of portfolio section -->
+
+{% endif %}
+
+{% endblock content %}
