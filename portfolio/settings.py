@@ -76,9 +76,17 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST':'r6ze0q02l4me77k3.chr7pe7iynqr.eu-west-1.rds.amazonaws.com',
+        'PORT': '3306',
+        'NAME': 'rotn5an6lom8bqys',
+        'USER': 'bf7dmzsypb6b5ibu',
+        'PASSWORD': 'y7tjpfa032w64gbl',
+    },
+    'default2': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
 }
 
 # Password validation
@@ -113,9 +121,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
+MEDIA_URL = 'https://media.devicesarena.tech/portfolio/media/'
+DEFAULT_FILE_STORAGE = 'portfolio.storage.MediaAzureStorage'
+AZURE_CUSTOM_DOMAIN = 'media.devicesarena.tech'
+AZURE_SECRET_ACCESS_KEY = '/THPzmwKdOesi0FQNsg5IDRLa3PuY+nX1JUshAlLg0dLj8msaB8Khzcp+bYh4iZSlB+el4Rim89j+AStssSdUg=='
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(STATIC_DIR, 'media')
 STATIC_ROOT = os.path.join(STATIC_DIR, 'static_root')
