@@ -14,31 +14,48 @@ import os
 import requests
 
 
+import os
+import traceback
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from google import genai  # Ensure you're using the latest google-genai SDK
+
 class ChatbotView(APIView):
     def post(self, request):
         user_message = request.data.get("message")
+        
         if not user_message:
             return Response(
-                {"error": "Message is required"}, status=status.HTTP_400_BAD_REQUEST
+                {"error": "Message is required"}, 
+                status=status.HTTP_400_BAD_REQUEST
             )
 
         try:
+            # Initialize the client
             client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
+            # Define the prompt (System instructions + User question)
             prompt = (
                 "You are AI Aiman, an AI assistant for Aiman Daba's portfolio website. "
-                "Answer questions about my skills, projects, and professional background. "
+                "Answer questions about my skills, projects, and professional background concisely. "
                 f"Question: {user_message}"
             )
 
+            # Use the 3.1 Flash-Lite model
             response = client.models.generate_content(
-                model="gemini-3-27b-it",
+                model="gemini-3.1-flash-lite-preview",
                 contents=prompt,
             )
+
             return Response({"response": response.text})
+
         except Exception as e:
+            # Print full trace to your terminal for debugging
+            traceback.print_exc()
             return Response(
-                {"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                {"error": str(e)}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
 
