@@ -1,9 +1,10 @@
-from django.conf import settings
-from storages.backends.azure_storage import AzureStorage
+import os
+from storages.backends.s3boto3 import S3Boto3Storage
+from django.core.files.storage import FileSystemStorage
 
+class CustomFileSystemStorage(FileSystemStorage):
+    pass
 
-class MediaAzureStorage(AzureStorage):
-    account_name = "devicesarena"
-    account_key = settings.AZURE_SECRET_ACCESS_KEY
-    azure_container = "portfolio/media"
-    expiration_secs = None
+class MediaS3Storage(S3Boto3Storage):
+    location = 'media'
+    file_overwrite = False

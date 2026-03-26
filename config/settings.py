@@ -135,8 +135,12 @@ MEDIA_URL = env("MEDIA_URL", default="/media/")
 DEFAULT_FILE_STORAGE = env(
     "DEFAULT_FILE_STORAGE", default="django.core.files.storage.FileSystemStorage"
 )
-AZURE_CUSTOM_DOMAIN = env("AZURE_CUSTOM_DOMAIN", default=None)
-AZURE_SECRET_ACCESS_KEY = env("AZURE_SECRET_ACCESS_KEY", default=None)
+
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID', default=None)
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY', default=None)
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME', default=None)
+AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME', default=None)
+
 STATIC_URL = "/static/"
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 MEDIA_ROOT = os.path.join(STATIC_DIR, "media")
