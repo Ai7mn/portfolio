@@ -1,0 +1,30 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "<h1 align=\"center\">Aiman Daba - Elite Open-Source Portfolio 🚀</h1>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "npx @tailwindcss/cli -i ./static/src/input.css -o ./static/static_files/css/tailwind.css --minify",
+    "dev:css": "npx @tailwindcss/cli -i ./static/src/input.css -o ./static/static_files/css/tailwind.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ai7mn/portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Ai7mn/portfolio/issues"
+  },
+  "homepage": "https://github.com/Ai7mn/portfolio#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.2",
+    "autoprefixer": "^10.4.27",
+    "concurrently": "^9.2.1",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.2"
+  }
+}

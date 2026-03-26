@@ -25,4 +25,8 @@ class ContactUsForm(forms.ModelForm):
         kwargs.setdefault("label_suffix", "")
         super(ContactUsForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
-            visible.field.widget.attrs.update({"class": "form-control"})
+            visible.field.widget.attrs.update({
+                "class": "w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+            })
+            if visible.name == "message":
+                visible.field.widget.attrs.update({"class": "w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"})

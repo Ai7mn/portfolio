@@ -1,16 +1,23 @@
-<div class="row">
-    {% for project in projects%}
-    <div class="col-md-4">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for project in projects %}
+    <div class="group relative bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 dark:border-slate-700 cursor-pointer">
+        <a href="{{ project.get_absolute_url }}" class="block w-full h-full">
+            <div class="relative h-64 overflow-hidden">
+                <img src="{{ project.image.url }}" alt="{{ project.name }}" loading="lazy" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                <!-- Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-60 group-hover:opacity-80 transition duration-500"></div>
 
-        <a href="{{project.get_absolute_url}}" class="portfolio-card">
-            <img src="{{project.image.url}}" class="portfolio-card-img" style="height: 350px;" alt="{{project.name}}" loading="lazy">
-            <span class="portfolio-card-overlay">
-                            <span class="portfolio-card-caption">
-                                <h4>{{project.name}}</h4>
-                                    <p class="font-weight-normal">About : {{project.category}}</p>
-                            </span>
-                        </span>
+                <!-- Content -->
+                <div class="absolute bottom-0 left-0 p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition duration-500">
+                    <p class="text-blue-400 font-semibold text-sm mb-2 opacity-0 group-hover:opacity-100 transition duration-500 delay-100">{{ project.category }}</p>
+                    <h3 class="text-2xl font-bold text-white">{{ project.name }}</h3>
+                </div>
+            </div>
         </a>
     </div>
-    {% endfor%}
-</div><!-- end of row -->
+    {% empty %}
+    <div class="col-span-full text-center py-12">
+        <p class="text-slate-500 dark:text-slate-400 text-lg">No projects available at the moment.</p>
+    </div>
+    {% endfor %}
+</div>

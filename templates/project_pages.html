@@ -1,19 +1,16 @@
-<div class="row">
-    {% for page in project_pages%}
-    <div class="col-md-4">
-
-        <a href="#" class="portfolio-card">
-            <img src="{{page.image.url}}" class="portfolio-card-img"
-                 alt="{{page.title}}">
-            <span class="portfolio-card-overlay">
-                            <span class="portfolio-card-caption">
-                                <h4>{{page.title}}</h4>
-                                {%if page.description%}
-                                    <p class="font-weight-normal">About : {{page.description}}</p>
-                                {% endif %}
-                            </span>
-                        </span>
-        </a>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+    {% for page in project_pages %}
+    <div class="bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-lg border border-gray-100 dark:border-slate-700 hover:shadow-2xl transition duration-500 transform hover:-translate-y-2" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="{{ forloop.counter0|add:2 }}00">
+        <div class="relative w-full h-80 bg-gray-200 dark:bg-slate-900 overflow-hidden group">
+            <img src="{{ page.image.url }}" alt="{{ page.title }}" loading="lazy" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+            <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition duration-500"></div>
+        </div>
+        <div class="p-8 text-left">
+            <h4 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">{{ page.title }}</h4>
+            {% if page.description %}
+            <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">{{ page.description }}</p>
+            {% endif %}
+        </div>
     </div>
-    {% endfor%}
-</div><!-- end of row -->
+    {% endfor %}
+</div>
