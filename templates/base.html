@@ -1,6 +1,8 @@
-{% load static %}
+{% load static i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,25 +14,46 @@
     <link rel="stylesheet" href="{% static 'vendors/themify-icons/css/themify-icons.css' %}">
     <!-- Bootstrap + Meyawo main styles -->
     <link rel="stylesheet" href="{% static 'css/meyawo.css' %}">
+    <!-- AOS.js -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Lottie -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
 
 <!-- Page Navbar -->
 <nav class="custom-navbar" data-spy="affix" data-offset-top="20">
     <div class="container">
-        <a class="logo" href="{% url 'home' %}">Aiman Daba</a>
+        <a class="logo" href="{% url 'home' %}">{% trans "Aiman Daba" %}</a>
         <ul class="nav">
             <li class="item">
-                <a class="link" href="#home">Home</a>
+                <a class="link" href="#home">{% trans "Home" %}</a>
             </li>
             <li class="item">
-                <a class="link" href="#about">About</a>
+                <a class="link" href="#about">{% trans "About" %}</a>
             </li>
             <li class="item">
-                <a class="link" href="#portfolio">Portfolio</a>
+                <a class="link" href="#portfolio">{% trans "Portfolio" %}</a>
             </li>
             <li class="item">
-                <a class="link" href="#contact">Contact</a>
+                <a class="link" href="#contact">{% trans "Contact" %}</a>
+            </li>
+            <li class="item">
+                <button id="theme-toggle" class="btn btn-sm btn-outline-primary" style="margin-left: 10px; margin-top: 15px;">Toggle Theme</button>
+            </li>
+            <li class="item" style="margin-top: 15px; margin-left: 10px;">
+                <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                    <input name="next" type="hidden" value="{{ redirect_to }}">
+                    <select name="language" onchange="this.form.submit()">
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                {{ language.name_local }} ({{ language.code }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
             </li>
         </ul>
         <a href="javascript:void(0)" id="nav-toggle" class="hamburger hamburger--elastic">
@@ -45,6 +68,26 @@
 <!-- Content Goes here -->
 {% endblock content %}
 
+<!-- Chat Widget -->
+<div id="chat-widget" style="position: fixed; bottom: 80px; right: 20px; z-index: 9999; background: var(--bg-color, white); border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); width: 350px; display: none; flex-direction: column; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1);">
+    <div style="background: linear-gradient(135deg, #007bff, #6610f2); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <h6 style="margin: 0; font-weight: bold; font-size: 16px;">AI Aiman</h6>
+        <button id="close-chat" style="background: none; border: none; color: white; cursor: pointer; font-size: 20px;">&times;</button>
+    </div>
+    <div id="chat-messages" style="height: 300px; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; background: rgba(255,255,255,0.05);">
+        <div style="background: rgba(0, 123, 255, 0.1); padding: 10px 15px; border-radius: 15px; border-bottom-left-radius: 0; max-width: 80%; align-self: flex-start; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+            Hello! I'm AI Aiman. Ask me anything about my skills or projects.
+        </div>
+    </div>
+    <div style="display: flex; border-top: 1px solid rgba(0,0,0,0.1); padding: 10px; background: rgba(255,255,255,0.02);">
+        <input type="text" id="chat-input" placeholder="Type a message..." style="flex: 1; border: 1px solid rgba(0,0,0,0.1); padding: 10px 15px; border-radius: 20px; outline: none; background: transparent; color: inherit;">
+        <button id="send-chat" style="border: none; background: #007bff; color: white; padding: 10px 20px; border-radius: 20px; margin-left: 10px; cursor: pointer; font-weight: bold; transition: background 0.3s;">Send</button>
+    </div>
+</div>
+<button id="open-chat" style="position: fixed; bottom: 20px; right: 20px; z-index: 9998; background: linear-gradient(135deg, #007bff, #6610f2); color: white; border: none; border-radius: 50%; width: 60px; height: 60px; font-size: 24px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.3s;">
+    <i class="ti-comments"></i>
+</button>
+
 {% include "footer.html" %}
 
 <!-- core  -->
@@ -56,6 +99,101 @@
 
 <!-- Meyawo js -->
 <script src="{% static 'js/meyawo.js' %}"></script>
+
+<!-- AOS.js -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+  const themeToggle = document.getElementById('theme-toggle');
+  const body = document.body;
+
+  // Check Local Storage
+  if (localStorage.getItem('theme') === 'dark') {
+      body.classList.add('dark-mode');
+  }
+
+  themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+      if (body.classList.contains('dark-mode')) {
+          localStorage.setItem('theme', 'dark');
+      } else {
+          localStorage.setItem('theme', 'light');
+      }
+  });
+
+  // Chat Widget Logic
+  const openChat = document.getElementById('open-chat');
+  const closeChat = document.getElementById('close-chat');
+  const chatWidget = document.getElementById('chat-widget');
+  const sendChat = document.getElementById('send-chat');
+  const chatInput = document.getElementById('chat-input');
+  const chatMessages = document.getElementById('chat-messages');
+
+  openChat.addEventListener('click', () => {
+      chatWidget.style.display = 'flex';
+      openChat.style.display = 'none';
+  });
+
+  closeChat.addEventListener('click', () => {
+      chatWidget.style.display = 'none';
+      openChat.style.display = 'block';
+  });
+
+  sendChat.addEventListener('click', async () => {
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      // Add user message to UI
+      const userMsgDiv = document.createElement('div');
+      userMsgDiv.style.background = 'rgba(102, 16, 242, 0.1)';
+      userMsgDiv.style.padding = '10px 15px';
+      userMsgDiv.style.borderRadius = '15px';
+      userMsgDiv.style.borderBottomRightRadius = '0';
+      userMsgDiv.style.maxWidth = '80%';
+      userMsgDiv.style.alignSelf = 'flex-end';
+      userMsgDiv.style.fontSize = '14px';
+      userMsgDiv.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+      userMsgDiv.textContent = message;
+      chatMessages.appendChild(userMsgDiv);
+
+      chatInput.value = '';
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      // Call API
+      try {
+          const response = await fetch('/api/chatbot/', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': '{{ csrf_token }}'
+              },
+              body: JSON.stringify({ message: message })
+          });
+          const data = await response.json();
+
+          const botMsgDiv = document.createElement('div');
+          botMsgDiv.style.background = 'rgba(0, 123, 255, 0.1)';
+          botMsgDiv.style.padding = '10px 15px';
+          botMsgDiv.style.borderRadius = '15px';
+          botMsgDiv.style.borderBottomLeftRadius = '0';
+          botMsgDiv.style.maxWidth = '80%';
+          botMsgDiv.style.alignSelf = 'flex-start';
+          botMsgDiv.style.fontSize = '14px';
+          botMsgDiv.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+          botMsgDiv.textContent = data.response || "Sorry, I couldn't understand that.";
+          chatMessages.appendChild(botMsgDiv);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+      } catch (error) {
+          console.error("Error communicating with Chatbot API", error);
+      }
+  });
+
+  chatInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+          sendChat.click();
+      }
+  });
+</script>
 
 </body>
 </html>
