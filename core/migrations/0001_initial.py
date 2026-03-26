@@ -7,32 +7,50 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='ContactUs',
+            name="ContactUs",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sender_name', models.CharField(blank=True, max_length=70, null=True)),
-                ('sender_email', models.CharField(blank=True, max_length=70, null=True)),
-                ('message', models.TextField()),
-                ('timeStamp', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("sender_name", models.CharField(blank=True, max_length=70, null=True)),
+                (
+                    "sender_email",
+                    models.CharField(blank=True, max_length=70, null=True),
+                ),
+                ("message", models.TextField()),
+                ("timeStamp", models.DateTimeField(auto_now_add=True)),
             ],
             options={
-                'verbose_name': 'Contact Us Massage',
-                'verbose_name_plural': 'Contact Us Massages',
-                'ordering': ['-timeStamp'],
+                "verbose_name": "Contact Us Massage",
+                "verbose_name_plural": "Contact Us Massages",
+                "ordering": ["-timeStamp"],
             },
         ),
         migrations.CreateModel(
-            name='CV',
+            name="CV",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('file', models.FileField(upload_to='cv/')),
-                ('active', models.BooleanField(default=True)),
-                ('timestamp', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("file", models.FileField(upload_to="cv/")),
+                ("active", models.BooleanField(default=True)),
+                ("timestamp", models.DateTimeField(auto_now_add=True)),
             ],
         ),
     ]

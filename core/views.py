@@ -6,6 +6,7 @@ from core.forms import ContactUsForm
 from core.models import CV
 from portfolio_app.models import Project
 
+
 def home(request):
     mycv = CV.objects.filter(active=True).first()
     cv_link = mycv.file.url if mycv else ""
@@ -14,18 +15,19 @@ def home(request):
     template = "home.html"
     return render(request, template, context)
 
+
 def contact_us(request):
     contact_form = ContactUsForm(request.POST or None)
     context = {}
-    if request.method == 'POST':
-        previous_page = request.META.get('HTTP_REFERER')
+    if request.method == "POST":
+        previous_page = request.META.get("HTTP_REFERER")
         if contact_form.is_valid():
             new_form = contact_form.save(commit=False)
             new_form.save()
             try:
-                return HttpResponseRedirect(previous_page or reverse('home'))
-            except:
-                return HttpResponseRedirect(reverse('home'))
+                return HttpResponseRedirect(previous_page or reverse("home"))
+            except Exception:
+                return HttpResponseRedirect(reverse("home"))
         else:
-            return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(reverse("home"))
     return render(request, "contact.html", context)
