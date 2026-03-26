@@ -9,7 +9,7 @@ from .serializers import (
     CVSerializer,
     ContactUsSerializer,
 )
-import google.generativeai as genai
+from google import genai
 import os
 import requests
 
@@ -22,17 +22,19 @@ class ChatbotView(APIView):
                 {"error": "Message is required"}, status=status.HTTP_400_BAD_REQUEST
             )
 
-        genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
-        model = genai.GenerativeModel("gemini-pro")
-
-        prompt = (
-            "You are AI Aiman, an AI assistant for Aiman Daba's portfolio website. "
-            "Answer questions about my skills, projects, and professional background. "
-            f"Question: {user_message}"
-        )
-
         try:
-            response = model.generate_content(prompt)
+            client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
+
+            prompt = (
+                "You are AI Aiman, an AI assistant for Aiman Daba's portfolio website. "
+                "Answer questions about my skills, projects, and professional background. "
+                f"Question: {user_message}"
+            )
+
+            response = client.models.generate_content(
+                model="gemini-3-27b-it",
+                contents=prompt,
+            )
             return Response({"response": response.text})
         except Exception as e:
             return Response(
