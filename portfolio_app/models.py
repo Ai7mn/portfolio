@@ -1,9 +1,10 @@
 from django.db import models
-
-# Create your models here.
 from django.urls import reverse
 from django.utils.safestring import mark_safe
-
+import sys
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from PIL import Image
 
 class Project(models.Model):
     image = models.ImageField(upload_to='images/',
@@ -18,7 +19,7 @@ class Project(models.Model):
     check_btn = models.CharField(max_length=100, default="Check Live", blank=True, null=True)
     local = models.BooleanField(default=True)
     content = models.TextField(blank=True, null=True)
-    display_order = models.IntegerField(max_length=10, default=1)
+    display_order = models.IntegerField(default=1) # Removed max_length
     slug = models.SlugField(max_length=200, null=True, blank=True, allow_unicode=True)
     timeStamp = models.DateTimeField(auto_now_add=True)
 
@@ -37,6 +38,20 @@ class Project(models.Model):
     def get_content(self):
         return mark_safe(self.content)
 
+    def save(self, *args, **kwargs):
+        if self.image and not self.image.name.endswith('.webp'):
+            img = Image.open(self.image)
+            output = BytesIO()
+            img.save(output, format='WEBP', quality=85)
+            output.seek(0)
+
+            name = self.image.name.rsplit('.', 1)[0] + '.webp'
+
+            self.image = InMemoryUploadedFile(
+                output, 'ImageField', name,
+                'image/webp', sys.getsizeof(output), None
+            )
+        super().save(*args, **kwargs)
 
 class ProjectImage(models.Model):
     project = models.ForeignKey(Project, null=True, on_delete=models.CASCADE)
@@ -52,26 +67,17 @@ class ProjectImage(models.Model):
     def __str__(self):
         return f"{self.project.name} - {self.title}"
 
+    def save(self, *args, **kwargs):
+        if self.image and not self.image.name.endswith('.webp'):
+            img = Image.open(self.image)
+            output = BytesIO()
+            img.save(output, format='WEBP', quality=85)
+            output.seek(0)
 
-class CV(models.Model):
-    file = models.FileField(upload_to='cv/')
-    active = models.BooleanField(default=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
+            name = self.image.name.rsplit('.', 1)[0] + '.webp'
 
-    def __str__(self):
-        return str(self.id)
-
-
-class ContactUs(models.Model):
-    sender_name = models.CharField(max_length=70, null=True, blank=True)
-    sender_email = models.CharField(max_length=70, null=True, blank=True)
-    message = models.TextField()
-    timeStamp = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ["-timeStamp"]
-        verbose_name = "Contact Us Massage"
-        verbose_name_plural = "Contact Us Massages"
-
-    def __str__(self):
-        return str(self.sender_name)
+            self.image = InMemoryUploadedFile(
+                output, 'ImageField', name,
+                'image/webp', sys.getsizeof(output), None
+            )
+        super().save(*args, **kwargs)

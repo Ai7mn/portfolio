@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 {% block content %}
 
 <!-- page header -->
-<header id="home" class="header">
+<header id="home" class="header" data-aos="fade-down" data-aos-duration="1000">
     <div class="overlay"></div>
     <div class="header-content container">
         <h1 class="header-title">
-            <span class="up">HI!</span>
-            <span class="down">I am Aiman Daba</span>
+            <span class="up">{% trans "HI!" %}</span>
+            <span class="down">{% trans "I am Aiman Daba" %}</span>
         </h1>
-        <p class="header-subtitle">Software Engineer</p>
+        <p class="header-subtitle">{% trans "Software Engineer" %}</p>
 
     </div>
 </header><!-- end of page header -->
 
 <!-- about section -->
-<section class="section pt-0" id="about">
+<section class="section pt-0" id="about" data-aos="fade-up" data-aos-duration="1000">
     <!-- container -->
     <div class="container text-center">
         <!-- about wrapper -->
@@ -42,7 +42,7 @@
 </section> <!-- end of about section -->
 
 <!-- service section -->
-<section class="section" id="service">
+<section class="section" id="service" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
     <div class="container text-center">
         <p class="section-subtitle">What I Do ?</p>
         <h6 class="section-title mb-6">My SKILLS</h6>
@@ -90,8 +90,32 @@
     </div>
 </section><!-- end of service section -->
 
+<!-- github stats section -->
+<section class="section" id="github-stats" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
+    <div class="container text-center">
+        <p class="section-subtitle">{% trans "Real-time Metrics" %}</p>
+        <h6 class="section-title mb-6">{% trans "GitHub Activity" %}</h6>
+        <div class="row">
+            <div class="col-md-6" style="margin-bottom: 20px;">
+                <div class="service-card" style="padding: 20px;">
+                    <h6 class="title" style="font-size: 24px;">{% trans "Total Contributions (Yearly)" %}</h6>
+                    <h1 id="gh-contributions" style="color: #007bff; font-weight: bold;">Loading...</h1>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="service-card" style="padding: 20px;">
+                    <h6 class="title" style="font-size: 24px;">{% trans "Top Languages" %}</h6>
+                    <ul id="gh-languages" style="list-style-type: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+                        <li>Loading...</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- portfolio section -->
-<section class="section" id="portfolio">
+<section class="section" id="portfolio" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
     <div class="container text-center">
         <p class="section-subtitle">What I Did ?</p>
         <h6 class="section-title mb-6">Portfolio</h6>

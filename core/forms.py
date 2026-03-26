@@ -1,6 +1,6 @@
 from django import forms
 
-from projects.models import ContactUs
+from core.models import ContactUs
 
 
 class ContactUsForm(forms.ModelForm):

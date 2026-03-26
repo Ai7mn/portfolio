@@ -17,14 +17,23 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
-from projects import views
+from core import views as core_views
+from portfolio_app import views as portfolio_views
+from django.urls import include
+
+from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('projects/<str:slug>/', views.single_project, name="single_project"),
-    path('contactus', views.contact_us, name='contact_us'),
+    path('api/', include('api.urls')),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
+
+urlpatterns += i18n_patterns(
+    path('', core_views.home, name='home'),
+    path('projects/<str:slug>/', portfolio_views.single_project, name="single_project"),
+    path('contactus', core_views.contact_us, name='contact_us'),
+)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
