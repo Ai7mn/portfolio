@@ -21,6 +21,20 @@ A production-grade, highly-optimized showcase built with Django. Designed for el
 - **Real-Time GitHub Metrics**: Dynamic dashboard utilizing the **GitHub GraphQL API** to showcase live contribution data and language statistics with advanced error handling.
 - **Production-Grade DevOps**: Robust deployment pipeline with multi-stage Docker builds and automated GitHub Actions CI.
 
+## 🖼️ Screenshots
+
+<p align="center">
+  <img src="screenshots/home.png" width="45%" alt="Home Page" />
+  <img src="screenshots/about.png" width="45%" alt="About Page" />
+</p>
+<p align="center">
+  <img src="screenshots/projects.png" width="45%" alt="Projects Showcase" />
+  <img src="screenshots/skills.png" width="45%" alt="Skills & Tech Stack" />
+</p>
+<p align="center">
+  <img src="screenshots/contact.png" width="90%" alt="Contact Page" />
+</p>
+
 ## 🚀 Quick Deployment
 
 Click the button below to deploy this application seamlessly via Render.
