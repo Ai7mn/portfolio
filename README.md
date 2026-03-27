@@ -14,26 +14,18 @@ A production-grade, highly-optimized showcase built with Django. Designed for el
 
 - **Modular Architecture**: Built with multiple apps (`core`, `portfolio`, `blog`, `api`) utilizing best practices.
 - **Headless-Ready API**: Features a robust RESTful API built on the Django REST Framework.
-- **AI Chatbot Service**: Seamless integration with the Gemini API to serve professional inquiries.
-- **Glassmorphism Theme Engine**: Features Lottie micro-interactions, AOS.js scrolling, and persistent Dark/Light themes.
-- **Global Accessibility (i18n)**: Fully internationalized with English (LTR) and Arabic (RTL) support.
-- **High-Performance Assets**: Automatically converts uploaded images to optimized `WebP` files to ensure a 100/100 Lighthouse score.
-- **Real-Time GitHub Metrics**: A dashboard that synchronizes real-time metrics using the GitHub GraphQL API.
-- **Production-Grade DevOps**: Includes multi-stage Docker builds, docker-compose, and GitHub Actions CI pipelines.
+- **AI Chatbot Service**: Powered by **Gemini 3.1 Flash**, providing intelligent, context-aware responses by analyzing the project portfolio and active CV data.
+- **Glassmorphism Theme Engine**: A premium UI experience with Lottie micro-interactions, AOS.js animations, and persistent Dark/Light modes.
+- **Global Accessibility (i18n)**: Comprehensive multi-language support (English LTR & Arabic RTL) for a global audience.
+- **Automated Image Optimization**: Integrated pipeline that converts uploads to **WebP**, ensuring peak performance and a 100/100 Lighthouse score.
+- **Real-Time GitHub Metrics**: Dynamic dashboard utilizing the **GitHub GraphQL API** to showcase live contribution data and language statistics with advanced error handling.
+- **Production-Grade DevOps**: Robust deployment pipeline with multi-stage Docker builds and automated GitHub Actions CI.
 
 ## 🚀 Quick Deployment
 
 Click the button below to deploy this application seamlessly via Render.
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
-
-## 🗺️ Roadmap
-
-- [x] Phase 1: Architectural Reconstruction (Backend & DevOps)
-- [x] Phase 2: Luxurious UI/UX & I18N
-- [x] Phase 3: The "Star-Magnet" Features (AI, GitHub APIs, WebP optimizations)
-- [ ] Phase 4: Developer Experience (Interactive README & Docs)
-- [ ] Phase 5: Additional test coverage & E2E Verification.
 
 ## 🛠️ Local Installation
 
@@ -45,7 +37,7 @@ Click the button below to deploy this application seamlessly via Render.
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/aimandaba/portfolio.git
+   git clone https://github.com/Ai7mn/portfolio.git
    cd portfolio
    ```
 
