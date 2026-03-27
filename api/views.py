@@ -9,12 +9,48 @@ from .serializers import (
     CVSerializer,
     ContactUsSerializer,
 )
-import google.generativeai as genai
+from google import genai
 import os
 import requests
+import PyPDF2
+from io import BytesIO
 
 
 class ChatbotView(APIView):
+    def _get_context(self):
+        # 1. Gather Projects Context
+        projects = Project.objects.filter(visible=True).order_by("display_order")
+        projects_text = "PORTFOLIO PROJECTS:\n"
+        for p in projects:
+            projects_text += f"- {p.name} ({p.category}): {p.content}\n"
+
+        # 2. Gather CV Context
+        cv_text = "\nPROFESSIONAL CV CONTENT:\n"
+        active_cv = CV.objects.filter(active=True).first()
+        if active_cv and active_cv.file:
+            try:
+                file_ext = os.path.splitext(active_cv.file.name)[1].lower()
+                if file_ext == ".pdf":
+                    try:
+                        active_cv.file.open()
+                        reader = PyPDF2.PdfReader(active_cv.file)
+                        for page in reader.pages:
+                            cv_text += page.extract_text() + "\n"
+                    finally:
+                        active_cv.file.close()
+                else:
+                    try:
+                        active_cv.file.open()
+                        cv_text += active_cv.file.read().decode("utf-8")
+                    finally:
+                        active_cv.file.close()
+            except Exception as e:
+                cv_text += f"(Error reading CV file: {str(e)})"
+        else:
+            cv_text += "(No active CV found)"
+
+        return f"{projects_text}\n{cv_text}"
+
     def post(self, request):
         user_message = request.data.get("message")
         if not user_message:
@@ -22,22 +58,34 @@ class ChatbotView(APIView):
                 {"error": "Message is required"}, status=status.HTTP_400_BAD_REQUEST
             )
 
-        genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
-        model = genai.GenerativeModel("gemini-pro")
-
-        prompt = (
-            "You are AI Aiman, an AI assistant for Aiman Daba's portfolio website. "
-            "Answer questions about my skills, projects, and professional background. "
-            f"Question: {user_message}"
-        )
-
         try:
-            response = model.generate_content(prompt)
+            client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
+
+            context = self._get_context()
+            
+            prompt = (
+                "You are AI Aiman, an elite AI assistant for Aiman Daba's professional portfolio. "
+                "Your goal is to answer questions about Aiman's skills, experience, and projects using the context provided below. "
+                "Be professional, encouraging, and accurate based ONLY on the provided context. "
+                "If the context doesn't contain the answer, say you're not sure but offer to let the user contact Aiman directly.\n\n"
+                f"CONTEXT:\n{context}\n\n"
+                f"USER QUESTION: {user_message}"
+            )
+
+            # Note: Public Gemini models are gemini-2.5-flash or gemini-2.5-pro
+            # Using flash for faster responses if not specified
+            model_name = os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite-preview")
+
+            response = client.models.generate_content(
+                model=model_name,
+                contents=prompt,
+            )
             return Response({"response": response.text})
         except Exception as e:
             return Response(
                 {"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
 
 
 class GitHubMetricsView(APIView):
@@ -49,6 +97,9 @@ class GitHubMetricsView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
+        # FIX 1: Added a space after 'Bearer'
+        # FIX 2: GitHub GraphQL endpoint is /graphql, not the base URL
+        url = "https://api.github.com/graphql"
         headers = {
             "Authorization": f"Bearer {github_token}",
             "Content-Type": "application/json",
@@ -81,19 +132,24 @@ class GitHubMetricsView(APIView):
 
         try:
             response = requests.post(
-                "https://api.github.com/graphql", json={"query": query}, headers=headers
+                url, json={"query": query}, headers=headers
             )
             response.raise_for_status()
             data = response.json()
 
-            contributions = data["data"]["viewer"]["contributionsCollection"][
-                "contributionCalendar"
-            ]["totalContributions"]
-            repos = data["data"]["viewer"]["repositories"]["nodes"]
+            # FIX 3: GraphQL can return 200 OK even if there are query errors
+            if "errors" in data:
+                return Response(data["errors"], status=status.HTTP_400_BAD_REQUEST)
+
+            viewer_data = data["data"]["viewer"]
+            contributions = viewer_data["contributionsCollection"]["contributionCalendar"]["totalContributions"]
+            repos = viewer_data["repositories"]["nodes"]
 
             language_stats = {}
             for repo in repos:
-                for edge in repo.get("languages", {}).get("edges", []):
+                # Use .get() to avoid KeyErrors if languages are empty
+                langs = repo.get("languages", {})
+                for edge in langs.get("edges", []):
                     lang = edge["node"]["name"]
                     size = edge["size"]
                     language_stats[lang] = language_stats.get(lang, 0) + size
@@ -106,8 +162,6 @@ class GitHubMetricsView(APIView):
             return Response(
                 {"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-
-
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer

@@ -2,128 +2,181 @@
 {% load static i18n %}
 {% block content %}
 
-<!-- page header -->
-<header id="home" class="header" data-aos="fade-down" data-aos-duration="1000">
-    <div class="overlay"></div>
-    <div class="header-content container">
-        <h1 class="header-title">
-            <span class="up">{% trans "HI!" %}</span>
-            <span class="down">{% trans "I am Aiman Daba" %}</span>
+<!-- Hero Section -->
+<section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex items-center justify-center min-h-screen">
+    <!-- Abstract Background Gradients -->
+    <div class="absolute inset-0 z-0">
+        <div class="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-blob"></div>
+        <div class="absolute top-0 -right-4 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-8 left-20 w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-blob animation-delay-4000"></div>
+    </div>
+
+    <div class="container mx-auto px-6 relative z-10 text-center" data-aos="fade-up" data-aos-duration="1000">
+        <p class="text-blue-600 dark:text-blue-400 font-bold tracking-widest uppercase mb-4 text-sm">{% trans "Software Engineer" %}</p>
+        <h1 class="text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tight leading-tight">
+            {% trans "Hello, I'm" %} <br/>
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">{% trans "Aiman Daba" %}</span>
         </h1>
-        <p class="header-subtitle">{% trans "Software Engineer" %}</p>
-
+        <p class="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+            {% trans "Crafting robust, scalable web and mobile applications with elegant architecture and modern technologies." %}
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <a href="#portfolio" class="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 w-full sm:w-auto">
+                {% trans "View Work" %}
+            </a>
+            <a href="{{ cv_link }}" target="_blank" class="px-8 py-4 bg-white dark:bg-slate-800 text-slate-800 dark:text-white font-semibold rounded-full border border-gray-200 dark:border-slate-700 shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 w-full sm:w-auto">
+                {% trans "Download CV" %}
+            </a>
+        </div>
     </div>
-</header><!-- end of page header -->
+</section>
 
-<!-- about section -->
-<section class="section pt-0" id="about" data-aos="fade-up" data-aos-duration="1000">
-    <!-- container -->
-    <div class="container text-center">
-        <!-- about wrapper -->
-        <div class="about">
-            <div class="about-img-holder">
-                <img src="{% static 'imgs/myphoto.png'%}" class="about-img" alt="Aiman Daba">
+<!-- About Section -->
+<section id="about" class="py-20 bg-white dark:bg-slate-800/50" data-aos="fade-up" data-aos-duration="1000">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="relative group mx-auto lg:mx-0 max-w-sm">
+                <div class="absolute -inset-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-3xl opacity-50 group-hover:opacity-75 transition duration-500 blur"></div>
+                <div class="relative bg-white dark:bg-slate-900 rounded-2xl p-2 ring-1 ring-gray-200 dark:ring-gray-800">
+                    <img src="{% static 'imgs/myphoto.png' %}" alt="Aiman Daba" class="rounded-xl w-full object-cover shadow-2xl grayscale-[20%] group-hover:grayscale-0 transition duration-500">
+                </div>
             </div>
-            <div class="about-caption">
-                <p class="section-subtitle">Who Am I ?</p>
-                <h2 class="section-title mb-3">About Me</h2>
-                <p>
-                    I am Highly motivated and skilled software engineering graduate with experience in full-stack development. Proficient in
-                    multiple programming languages, including Java, Python, and JavaScript. Strong understanding of software development
-                    principles and agile methodologies. Experienced in working with databases, RESTful APIs, and frameworks such as Django
-                    and Flutter. Adept at developing and deploying scalable, robust, and secure web applications. Proven ability to work
-                    collaboratively with cross-functional teams to achieve project goals. Looking for an opportunity to leverage my skills and
-                    passion for software development to contribute to an innovative and dynamic team.
+            <div>
+                <p class="text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider mb-2 text-sm">{% trans "Who Am I?" %}</p>
+                <h2 class="text-4xl font-bold text-slate-900 dark:text-white mb-6">{% trans "About Me" %}</h2>
+                <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed mb-6">
+                    I am a highly motivated and skilled software engineering graduate with experience in full-stack development. Proficient in multiple programming languages, including Java, Python, and JavaScript. Strong understanding of software development principles and agile methodologies.
                 </p>
-                <a href="{{cv_link}}" class="btn-rounded btn btn-outline-primary mt-4">Download CV</a>
+                <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed">
+                    Experienced in working with databases, RESTful APIs, and frameworks such as Django and Flutter. Adept at developing and deploying scalable, robust, and secure web applications. Look forward to leveraging my skills and passion for software development to contribute to an innovative team.
+                </p>
             </div>
-        </div><!-- end of about wrapper -->
-    </div><!-- end of container -->
-</section> <!-- end of about section -->
-
-<!-- service section -->
-<section class="section" id="service" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-    <div class="container text-center">
-        <p class="section-subtitle">What I Do ?</p>
-        <h6 class="section-title mb-6">My SKILLS</h6>
-        <!-- row -->
-        <div class="row">
-            <div class="col-md-6 col-lg-3">
-                <div class="service-card">
-                    <div class="body">
-                        <img src="{% static 'imgs/internet.png' %}" alt="WEB DEVELOPMENT" class="icon">
-                        <h6 class="title">Full Stack Web Developer</h6>
-                        <p class="subtitle">
-                            I am a Full Stack Web Developer proficient in Django, HTML, CSS, Bootstrap, JavaScript, jQuery, AJAX, and MySQL.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="service-card">
-                    <div class="body">
-                        <img src="{% static 'imgs/app-development.png' %}" alt="Mobile Development" class="icon">
-                        <h6 class="title">Full Stack Mobile Developer</h6>
-                        <p class="subtitle">I am a Full Stack mobile Developer proficient in Flutter & Dart,Firebase, RESTFul api development and consumption and noSQL</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="service-card">
-                    <div class="body">
-                        <img src="{% static 'imgs/cloud-service.png' %}" alt="Cloud Computing" class="icon">
-                        <h6 class="title">Cloud Computing</h6>
-                        <p class="subtitle">I have experience dealing with many cloud platforms such as Azure, Google Cloud and Alibaba Cloud </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="service-card">
-                    <div class="body">
-                        <img src="{% static 'imgs/servers.png' %}" alt="Server Management" class="icon">
-                        <h6 class="title">Server Management</h6>
-                        <p class="subtitle">I have extensive experience in server management, particularly with Linux servers, Apache, and Nginx. With my knowledge and expertise, I can effectively configure, deploy, and maintain these server technologies to ensure optimal performance and reliability for web applications.</p>
-                    </div>
-                </div>
-            </div>
-        </div><!-- end of row -->
+        </div>
     </div>
-</section><!-- end of service section -->
+</section>
 
-<!-- github stats section -->
-<section class="section" id="github-stats" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
-    <div class="container text-center">
-        <p class="section-subtitle">{% trans "Real-time Metrics" %}</p>
-        <h6 class="section-title mb-6">{% trans "GitHub Activity" %}</h6>
-        <div class="row">
-            <div class="col-md-6" style="margin-bottom: 20px;">
-                <div class="service-card" style="padding: 20px;">
-                    <h6 class="title" style="font-size: 24px;">{% trans "Total Contributions (Yearly)" %}</h6>
-                    <h1 id="gh-contributions" style="color: #007bff; font-weight: bold;">Loading...</h1>
+<!-- GitHub Stats Section (Bento Grid) -->
+<section id="github-stats" class="py-20 bg-gray-50 dark:bg-slate-900" data-aos="fade-up" data-aos-duration="1000">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+        <p class="text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider mb-2 text-sm">{% trans "Real-Time Metrics" %}</p>
+        <h2 class="text-4xl font-bold text-slate-900 dark:text-white mb-12">{% trans "GitHub Activity" %}</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Contributions Card -->
+            <div class="glass dark:glass-dark p-8 rounded-3xl relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition duration-500"></div>
+                <div class="relative z-10 flex flex-col items-center justify-center h-full">
+                    <h3 class="text-xl font-semibold text-slate-500 dark:text-slate-400 mb-4">{% trans "Yearly Contributions" %}</h3>
+                    <div class="text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-br from-blue-600 to-cyan-500" id="gh-contributions">
+                        <svg class="animate-spin h-10 w-10 text-blue-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="service-card" style="padding: 20px;">
-                    <h6 class="title" style="font-size: 24px;">{% trans "Top Languages" %}</h6>
-                    <ul id="gh-languages" style="list-style-type: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-                        <li>Loading...</li>
-                    </ul>
+
+            <!-- Top Languages Card -->
+            <div class="glass dark:glass-dark p-8 rounded-3xl relative overflow-hidden group">
+                <div class="absolute bottom-0 left-0 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl group-hover:bg-purple-500/20 transition duration-500"></div>
+                <div class="relative z-10">
+                    <h3 class="text-xl font-semibold text-slate-500 dark:text-slate-400 mb-6 text-center">{% trans "Top Languages" %}</h3>
+                    <div id="gh-languages" class="flex flex-wrap justify-center gap-3">
+                        <div class="h-8 w-24 bg-gray-200 dark:bg-slate-700 animate-pulse rounded-full"></div>
+                        <div class="h-8 w-20 bg-gray-200 dark:bg-slate-700 animate-pulse rounded-full"></div>
+                        <div class="h-8 w-28 bg-gray-200 dark:bg-slate-700 animate-pulse rounded-full"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- portfolio section -->
-<section class="section" id="portfolio" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
-    <div class="container text-center">
-        <p class="section-subtitle">What I Did ?</p>
-        <h6 class="section-title mb-6">Portfolio</h6>
-        <!-- row -->
+<!-- Skills Section -->
+<section id="service" class="py-20 bg-white dark:bg-slate-800/50" data-aos="fade-up" data-aos-duration="1000">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <p class="text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider mb-2 text-sm">{% trans "What I Do?" %}</p>
+            <h2 class="text-4xl font-bold text-slate-900 dark:text-white">{% trans "My Expertise" %}</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Skill Card 1 -->
+            <div class="bg-gray-50 dark:bg-slate-800 p-8 rounded-3xl border border-gray-100 dark:border-slate-700 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group">
+                <div class="w-14 h-14 mb-6 rounded-2xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center group-hover:scale-110 transition duration-300">
+                    <img src="{% static 'imgs/internet.png' %}" alt="Web" class="w-8 h-8 opacity-80 dark:invert">
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Full Stack Web</h3>
+                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Proficient in Django, HTML, CSS, Bootstrap, JavaScript, jQuery, AJAX, and MySQL.</p>
+            </div>
+
+            <!-- Skill Card 2 -->
+            <div class="bg-gray-50 dark:bg-slate-800 p-8 rounded-3xl border border-gray-100 dark:border-slate-700 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group">
+                <div class="w-14 h-14 mb-6 rounded-2xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center group-hover:scale-110 transition duration-300">
+                    <img src="{% static 'imgs/app-development.png' %}" alt="Mobile" class="w-8 h-8 opacity-80 dark:invert">
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Mobile Dev</h3>
+                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Full Stack mobile Developer proficient in Flutter & Dart, Firebase, RESTFul APIs and NoSQL.</p>
+            </div>
+
+            <!-- Skill Card 3 -->
+            <div class="bg-gray-50 dark:bg-slate-800 p-8 rounded-3xl border border-gray-100 dark:border-slate-700 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group">
+                <div class="w-14 h-14 mb-6 rounded-2xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center group-hover:scale-110 transition duration-300">
+                    <img src="{% static 'imgs/cloud-service.png' %}" alt="Cloud" class="w-8 h-8 opacity-80 dark:invert">
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Cloud Computing</h3>
+                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Experience dealing with many cloud platforms such as Azure, Google Cloud and Alibaba Cloud.</p>
+            </div>
+
+            <!-- Skill Card 4 -->
+            <div class="bg-gray-50 dark:bg-slate-800 p-8 rounded-3xl border border-gray-100 dark:border-slate-700 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group">
+                <div class="w-14 h-14 mb-6 rounded-2xl bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center group-hover:scale-110 transition duration-300">
+                    <img src="{% static 'imgs/servers.png' %}" alt="Server" class="w-8 h-8 opacity-80 dark:invert">
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">Server Mgmt</h3>
+                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">Extensive experience in Linux servers, Apache, and Nginx configuration and deployment.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Section -->
+<section id="portfolio" class="py-20 bg-gray-50 dark:bg-slate-900" data-aos="fade-up" data-aos-duration="1000">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <p class="text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider mb-2 text-sm">{% trans "What I Did?" %}</p>
+            <h2 class="text-4xl font-bold text-slate-900 dark:text-white">{% trans "Featured Projects" %}</h2>
+        </div>
+
         {% include "portfolio.html" %}
-    </div><!-- end of container -->
-</section> <!-- end of portfolio section -->
+    </div>
+</section>
 
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch('/api/github-stats/');
+        const data = await response.json();
 
+        if (data.total_contributions) {
+            document.getElementById('gh-contributions').innerHTML = data.total_contributions;
+        }
+
+        const langList = document.getElementById('gh-languages');
+        if (data.language_stats) {
+            langList.innerHTML = '';
+            const sortedLangs = Object.entries(data.language_stats)
+                .sort(([,a],[,b]) => b-a)
+                .slice(0, 5);
+
+            sortedLangs.forEach(([lang, size]) => {
+                const div = document.createElement('div');
+                div.className = 'px-4 py-2 rounded-full text-sm font-semibold border border-blue-500/30 text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/20 backdrop-blur-sm shadow-sm';
+                div.innerText = lang;
+                langList.appendChild(div);
+            });
+        }
+    } catch (error) {
+        console.error("Failed to load GitHub stats:", error);
+    }
+});
+</script>
 
 {% endblock content %}

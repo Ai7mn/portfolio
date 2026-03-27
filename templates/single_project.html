@@ -1,52 +1,53 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 {% block content %}
 
-<header id="home" class="header">
-  <div class="overlay"></div>
-  <div class="header-content container">
-    <h1 class="header-title">
-      <span class="down">{{project.name}}</span>
-    </h1>
-    <p class="header-subtitle">{{project.category}}</p>
+<!-- Hero Section -->
+<header id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-slate-900 overflow-hidden flex flex-col items-center justify-center min-h-[60vh] text-center" data-aos="fade-down" data-aos-duration="1000">
+    <div class="absolute inset-0 z-0">
+        <img src="{{ project.image.url }}" class="w-full h-full object-cover opacity-20 filter blur-sm" alt="{{ project.name }} Background">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900"></div>
+    </div>
 
-  </div>
+    <div class="relative z-10 px-6">
+        <p class="text-blue-400 font-bold uppercase tracking-widest mb-4 text-sm">{{ project.category }}</p>
+        <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight">
+            {{ project.name }}
+        </h1>
+    </div>
 </header>
 
-<!-- about section -->
-<section class="section pt-0" id="about">
-  <!-- container -->
-  <div class="container text-center">
-    <!-- about wrapper -->
-    <div class="about">
-      <div class="about-img-holder">
-        <img src="{{project.image.url}}" class="about-img" alt="{{project.name}}" loading="lazy">
-      </div>
-      <div class="about-caption">
-        <h2 class="section-title mb-3">About {{project.name}}</h2>
-        <p>
-          {{project.content}}
-        </p>
-        {%if project.url%}
-        <a href="{{project.url}}" target="_blank" class="btn-rounded btn btn-outline-primary mt-4">{{project.check_btn}}</a>
-        {% endif %}
-      </div>
-      </div><!-- end of about wrapper -->
-    </div><!-- end of container -->
-  </section> <!-- end of about section -->
+<!-- About Section -->
+<section id="about" class="py-20 bg-white dark:bg-slate-800" data-aos="fade-up" data-aos-duration="1000">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+        <div class="prose prose-lg dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-loose">
+            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-8 border-b-2 border-blue-500 pb-4 inline-block">{% trans "About" %} {{ project.name }}</h2>
+            <div class="mt-6 text-lg">
+                {{ project.content|safe }}
+            </div>
 
+            {% if project.url %}
+            <div class="mt-12 text-center md:text-left">
+                <a href="{{ project.url }}" target="_blank" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                    {{ project.check_btn|default:"Check Live" }}
+                    <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
 
-{%if project.local%}
-<!-- portfolio section -->
-<section class="section" id="portfolio">
-  <div class="container text-center">
+<!-- Project Images Section -->
+{% if project.local and project_pages %}
+<section id="portfolio" class="py-20 bg-gray-50 dark:bg-slate-900" data-aos="fade-up" data-aos-duration="1000">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+        <p class="text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider mb-2 text-sm">{% trans "Gallery" %}</p>
+        <h2 class="text-4xl font-bold text-slate-900 dark:text-white mb-16">{% trans "Project Views" %}</h2>
 
-    <h6 class="section-title mb-6">Project Pages</h6>
-    <!-- row -->
-    {% include "project_pages.html" %}
-  </div><!-- end of container -->
-</section> <!-- end of portfolio section -->
-
+        {% include "project_pages.html" %}
+    </div>
+</section>
 {% endif %}
 
 {% endblock content %}
